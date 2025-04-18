@@ -3,158 +3,155 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>EcoCycle Bot - Purchase</title>
+  <title>EcoCycle Purchase</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
   <style>
     body {
-      margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: #1a1a1a;
-      color: #f0f0f0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 4rem 1rem;
+      background: #121212;
+      color: #fff;
+      margin: 0;
+      padding: 2rem;
     }
-
-    h1 {
-      color: #2ecc71;
-      margin-bottom: 1rem;
-    }
-
-    form {
-      background: #2d2d2d;
+    .container {
+      max-width: 500px;
+      background: #1e1e1e;
+      margin: auto;
       padding: 2rem;
       border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
-      max-width: 500px;
-      width: 100%;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     }
-
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
     label {
       display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
+      margin-top: 1rem;
     }
-
-    input {
+    input, select, textarea {
       width: 100%;
       padding: 0.8rem;
-      margin-bottom: 1.5rem;
-      border: none;
+      margin-top: 0.5rem;
+      background: #2a2a2a;
+      color: #fff;
+      border: 1px solid #444;
       border-radius: 6px;
-      background: #444;
-      color: white;
     }
-
-    button {
-      background: #27ae60;
-      color: white;
-      padding: 0.8rem 2rem;
-      border: none;
-      border-radius: 50px;
-      font-weight: bold;
-      cursor: pointer;
-      width: 100%;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background: #20bf55;
-    }
-
-    .message {
-      margin-top: 1rem;
-      font-size: 0.95rem;
-      text-align: center;
-    }
-
-    a.back-link {
+    .btn {
+      display: block;
       margin-top: 2rem;
-      display: inline-block;
-      color: #aaa;
-      text-decoration: none;
+      width: 100%;
+      padding: 0.8rem;
+      background: #27ae60;
+      border: none;
+      color: white;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
     }
-
-    a.back-link:hover {
-      text-decoration: underline;
+    .note {
+      background: #333;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+    .success {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #2ecc71;
+      color: #fff;
+      border-radius: 6px;
+      display: none;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <h1>Complete Your Order</h1>
-  <p>Enter your details to validate and receive your EcoCycle Bot</p>
+  <div class="container">
+    <h2>Order Your EcoCycle Bot</h2>
+    <form id="purchaseForm">
+      <label>Full Name</label>
+      <input type="text" id="name" required />
 
-  <form id="purchaseForm">
-    <label for="fullname">Full Name</label>
-    <input type="text" id="fullname" required>
+      <label>Email Address</label>
+      <input type="email" id="email" required />
 
-    <label for="email">Email Address</label>
-    <input type="email" id="email" required>
+      <label>Preferred Payment Method</label>
+      <select id="payment" required>
+        <option value="">Select One</option>
+        <option value="Crypto (Cash-in)">Crypto (Cash-in)</option>
+        <option value="Bank Transfer (Cleva)">Bank Transfer (Cleva)</option>
+      </select>
 
-    <label for="telegram">Telegram Username</label>
-    <input type="text" id="telegram" placeholder="@YourUsername" required>
+      <div id="paymentNote" class="note" style="display: none;"></div>
 
-    <label for="license">License Key (if available)</label>
-    <input type="text" id="license">
+      <button type="submit" class="btn">Submit Order</button>
+    </form>
 
-    <button type="submit">Validate & Submit</button>
-    <div class="message" id="formMessage"></div>
-  </form>
-
-  <a class="back-link" href="index.html">← Back to Home</a>
+    <div id="success" class="success">Order received! We'll contact you shortly.</div>
+  </div>
 
   <script>
     const form = document.getElementById('purchaseForm');
-    const message = document.getElementById('formMessage');
+    const successMsg = document.getElementById('success');
+    const noteBox = document.getElementById('paymentNote');
+    const payment = document.getElementById('payment');
 
-    const BOT_TOKEN = '7420405006:AAEUdeMJN1jF5DkWRsTPFTOWvxZJ7vJ-iTw';
-    const CHAT_ID = '5252096894';
+    const telegramBotToken = '7420405006:AAEUdeMJN1jF5DkWRsTPFTOWvxZJ7vJ-iTw';
+    const telegramChatId = '5252096894';
+
+    payment.addEventListener('change', () => {
+      const method = payment.value;
+      let note = '';
+      if (method.includes('Crypto')) {
+        note = `
+Send payment using the following details:
+
+- BTC: bc1qejsdz6qj4pt7sr6zxxydr567e6c46dvark5x9w
+- USDT (TRC20): TBMyVyPW1KUpJ6nRdqRFuFjJfSfmqT45Fo
+- USDT (BEP20): 0x971b0396604AfeF4BBC4812d23072A0a23E22a20
+
+Please make sure to send the correct amount. A payment confirmation will be required.
+        `;
+      } else if (method.includes('Bank')) {
+        note = `Transfer to your Cleva account. Make sure to use your full name as transfer reference.`;
+      }
+      noteBox.innerText = note;
+      noteBox.style.display = 'block';
+    });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const method = payment.value;
 
-      const name = document.getElementById('fullname').value;
-      const email = document.getElementById('email').value;
-      const telegram = document.getElementById('telegram').value;
-      const license = document.getElementById('license').value;
+      if (!name || !email || !method) return;
 
-      const text = `
-🟢 New EcoCycle Bot Purchase:
-------------------------------
-👤 Name: ${name}
-✉️ Email: ${email}
-📨 Telegram: ${telegram}
-🔐 License Key: ${license || 'Not Provided'}
-------------------------------
-#EcoCycleBotOrder
-      `;
+      const message = `
+New EcoCycle Order:
 
-      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+Name: ${name}
+Email: ${email}
+Payment: ${method}
+`;
 
-      try {
-        const res = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: CHAT_ID,
-            text: text
-          })
-        });
+      // Send to Telegram
+      fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: telegramChatId, text: message })
+      });
 
-        if (res.ok) {
-          message.textContent = "Success! We'll contact you shortly.";
-          message.style.color = "#2ecc71";
-          form.reset();
-        } else {
-          message.textContent = "Error submitting form. Please try again.";
-          message.style.color = "#e74c3c";
-        }
-      } catch (err) {
-        message.textContent = "Network error. Please check your internet.";
-        message.style.color = "#e74c3c";
-      }
+      // Send to Gmail via mailto:
+      window.location.href = `mailto:adesinaabiola50@gmail.com?subject=New EcoCycle Order&body=${encodeURIComponent(message)}`;
+
+      form.reset();
+      noteBox.style.display = 'none';
+      successMsg.style.display = 'block';
     });
   </script>
 </body>
-  </html>
+</html>
