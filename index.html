@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FxAbìolá | Business Landing Page</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <style>
         /* Reset and Base Styles */
         * {
@@ -389,8 +390,10 @@
         
         .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0,  pensaba
-            .feature-icon {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -520,27 +523,28 @@
             max-width: 90%;
             margin: 0 auto;
             padding: 20px 0;
-            overflow: hidden; /* Ensure no overflow outside container */
+            overflow: hidden; /* Prevent overflow outside container */
         }
         
-        /* Main slider */
-        .testimonials-slider {
+        /* Swiper container */
+        .testimonial-swiper {
             width: 100%;
-            position: relative;
             padding: 10px 0;
-            cursor: grab;
-            overflow: visible; /* Allow partial visibility of adjacent cards */
+            overflow: visible; /* Allow partial visibility of adjacent slides */
         }
         
-        .testimonials-slider:active {
-            cursor: grabbing;
-        }
-        
-        /* Track containing all testimonial cards */
-        .testimonials-track {
+        /* Swiper slide */
+        .swiper-slide {
             display: flex;
-            transition: transform 0.5s ease;
-            align-items: center; /* Vertically center cards */
+            justify-content: center;
+            opacity: 0.3; /* Faded for non-active slides */
+            transform: scale(0.95); /* Smaller for non-active */
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .swiper-slide-active {
+            opacity: 1; /* Fully visible for active slide */
+            transform: scale(1.05); /* Enlarged for active */
         }
         
         /* Individual testimonial card */
@@ -549,24 +553,15 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             border-radius: 12px;
             padding: 1.5rem;
-            width: 320px; /* Fixed width for consistency */
-            margin: 0 10px; /* Space between cards */
-            flex-shrink: 0;
-            opacity: 0.3; /* Faded for non-active cards */
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            transform: scale(0.95); /* Slightly smaller for non-active */
-        }
-        
-        .testimonial-card.active {
-            opacity: 1; /* Fully visible */
-            transform: scale(1.05); /* Slightly enlarged */
+            width: 320px; /* Fixed width */
+            margin: 0 auto; /* Center within slide */
         }
         
         /* Testimonial text styling */
         .testimonial-text {
             font-size: 1rem;
             line-height: 1.5;
-            color: #cbd5e1;
+            color: #cbd5e1; /* Match page text */
             margin-bottom: 1rem;
             font-style: italic;
         }
@@ -597,36 +592,53 @@
         .author-info h4 {
             margin: 0;
             font-size: 1rem;
-            color: #f8fafc;
+            color: #f8fafc; /* Match page headings */
         }
         
         .author-info p {
             margin: 0.2rem 0 0;
             font-size: 0.875rem;
-            color: #94a3b8;
+            color: #94a3b8; /* Match page muted text */
         }
         
-        /* Pagination dots */
-        .slider-dots {
-            display: flex;
-            justify-content: center;
+        /* Swiper pagination */
+        .swiper-pagination {
+            position: relative;
             margin-top: 20px;
         }
         
-        .dot {
-            height: 8px;
+        .swiper-pagination-bullet {
             width: 8px;
-            margin: 0 5px;
+            height: 8px;
             background-color: #bbb;
-            border-radius: 50%;
-            display: inline-block;
+            opacity: 1;
             transition: background-color 0.3s ease, transform 0.3s ease;
-            cursor: pointer;
         }
         
-        .dot.active {
-            background-color: #6366f1;
+        .swiper-pagination-bullet-active {
+            background-color: #6366f1; /* Match theme */
             transform: scale(1.2);
+        }
+        
+        /* Swiper navigation buttons */
+        .swiper-button-prev,
+        .swiper-button-next {
+            color: #6366f1;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+        
+        .swiper-button-prev:hover,
+        .swiper-button-next:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .swiper-button-prev::after,
+        .swiper-button-next::after {
+            font-size: 20px;
         }
         
         /* CTA Section */
@@ -833,7 +845,7 @@
                 color: #f8fafc;
             }
         }
-
+        
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
@@ -901,47 +913,48 @@
                 <p>Our comprehensive Bot solutions is designed to address your trading challenges and capitalize on opportunities for growth.</p>
             </div>
             <div class="features-grid">
-                <div class="feature-card animate delay-1">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                        </svg>
+                <div class="抉
+                    <div class="feature-card animate delay-1">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                        </div>
+                        <h3>CER-BOT</h3>
+                        <ul class="feature-list">
+                            <li>📈 Advanced Trend trading</li>
+                            <li>🚀 Capital growth strategy</li>
+                        </ul>
+                        <a href="#" class="feature-link">
+                            Purchase
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
                     </div>
-                    <h3>CER-BOT</h3>
-                    <ul class="feature-list">
-                        <li>📈 Advanced Trend trading</li>
-                        <li>🚀 Capital growth strategy</li>
-                    </ul>
-                    <a href="#" class="feature-link">
-                        Purchase
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </a>
-                </div>
-                <div class="feature-card animate delay-1">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l4-4h-.586A1.994 1.994 0 019 13.414" />
-                        </svg>
+                    <div class="feature-card animate delay-1">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l4-4h-.586A1.994 1.994 0 019 13.414" />
+                            </svg>
+                        </div>
+                        <h3>T-signalBot</h3>
+                        <ul class="feature-list">
+                            <li>🔄 Automatically receives trade signals from our Telegram Channel</li>
+                            <li>🔥 Real time market call</li>
+                            <li>✅ Risk management Strategy</li>
+                            <li>✈️ Zero delay trade entry</li>
+                        </ul>
+                        <a href="#" class="feature-link">
+                            Purchase
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
                     </div>
-                    <h3>T-signalBot</h3>
-                    <ul class="feature-list">
-                        <li>🔄 Automatically receives trade signals from our Telegram Channel</li>
-                        <li>🔥 Real time market call</li>
-                        <li>✅ Risk management Strategy</li>
-                        <li>✈️ Zero delay trade entry</li>
-                    </ul>
-                    <a href="#" class="feature-link">
-                        Purchase
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
     <!-- About Section -->
     <section class="about section-padding" id="about">
@@ -981,57 +994,61 @@
             </div>
             
             <div class="testimonials-slider-container">
-                <div class="testimonials-slider" id="testimonialsSlider">
-                    <div class="testimonials-track" id="testimonialsTrack">
+                <div class="swiper-container testimonial-swiper" id="testimonialSwiper">
+                    <div class="swiper-wrapper">
                         <!-- Testimonial 1 -->
-                        <div class="testimonial-card">
-                            <p class="testimonial-text">"Innovate Solutions transformed our business strategy and boosted our growth beyond expectations."</p>
-                            <div class="testimonial-author">
-                                <div class="author-image">
-                                    <img src="/api/placeholder/50/50" alt="John Doe">
-                                </div>
-                                <div class="author-info">
-                                    <h4>John Doe</h4>
-                                    <p>CEO, TechCorp</p>
+                        <div class="swiper-slide">
+                            <div class="testimonial-card">
+                                <p class="testimonial-text">"Innovate Solutions transformed our business strategy and boosted our growth beyond expectations."</p>
+                                <div class="testimonial-author">
+                                    <div class="author-image">
+                                        <img src="/api/placeholder/50/50" alt="John Doe">
+                                    </div>
+                                    <div class="author-info">
+                                        <h4>John Doe</h4>
+                                        <p>CEO, TechCorp</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- Testimonial 2 -->
-                        <div class="testimonial-card">
-                            <p class="testimonial-text">"Their expertise in market analysis gave us a competitive edge we never had before."</p>
-                            <div class="testimonial-author">
-                                <div class="author-image">
-                                    <img src="/api/placeholder/50/50" alt="Jane Smith">
-                                </div>
-                                <div class="author-info">
-                                    <h4>Jane Smith</h4>
-                                    <p>Founder, StartUpX</p>
+                        <div class="swiper-slide">
+                            <div class="testimonial-card">
+                                <p class="testimonial-text">"Their expertise in market analysis gave us a competitive edge we never had before."</p>
+                                <div class="testimonial-author">
+                                    <div class="author-image">
+                                        <img src="/api/placeholder/50/50" alt="Jane Smith">
+                                    </div>
+                                    <div class="author-info">
+                                        <h4>Jane Smith</h4>
+                                        <p>Founder, StartUpX</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- Testimonial 3 -->
-                        <div class="testimonial-card">
-                            <p class="testimonial-text">"The digital marketing solutions provided were game-changing for our brand."</p>
-                            <div class="testimonial-author">
-                                <div class="author-image">
-                                    <img src="/api/placeholder/50/50" alt="Mike Johnson">
-                                </div>
-                                <div class="author-info">
-                                    <h4>Mike Johnson</h4>
-                                    <p>Marketing Director, GrowEasy</p>
+                        <div class="swiper-slide">
+                            <div class="testimonial-card">
+                                <p class="testimonial-text">"The digital marketing solutions provided were game-changing for our brand."</p>
+                                <div class="testimonial-author">
+                                    <div class="author-image">
+                                        <img src="/api/placeholder/50/50" alt="Mike Johnson">
+                                    </div>
+                                    <div class="author-info">
+                                        <h4>Mike Johnson</h4>
+                                        <p>Marketing Director, GrowEasy</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Pagination dots -->
-                <div class="slider-dots">
-                    <span class="dot active" onclick="goToSlide(0)"></span>
-                    <span class="dot" onclick="goToSlide(1)"></span>
-                    <span class="dot" onclick="goToSlide(2)"></span>
+                    <!-- Pagination -->
+                    <div class="swiper-pagination"></div>
+                    <!-- Navigation buttons -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
                 </div>
             </div>
         </div>
@@ -1081,7 +1098,7 @@
                         </a>
                         <a href="#" class="social-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.326 3.608 1.301.975.975 1.24 2.242 1.301 3.608.058 1.266.07 1.646.07 4.85 0 3.204-.012 3.584-.07 4.85-.062 1.366-.326 2.633-1.301 3.608-1.301.975-.975 1.24-2.242 1.301-3.608.058-1.266.07-1.646.07-4.85 0-3.204-.012-3.584-.07-4.85-.062-1.366-.326-2.633-1.301-3.608-.975-.975-2.242-1.24-3.608-1.301-1.266-.058-1.646-.07-4.85-.07-3.204 0-3.584.012-4.85.07-1.366.062-2.633.326-3.608 1.301-.975.975-1.24 2.242-1.301 3.608-.058 1.266-.07 1.646-.07 4.85 0 3.204.012 3.584.07 4.85.062 1.366.326 2.633 1.301 3.608.975.975 2.242 1.24 3.608 1.301 1.266.058 1.646.07 4.85.07zm0-2.163c-3.259 0-3.667.014-4.947.072-1.406.062-2.713.34-3.707 1.333-.993.993-1.27 2.3-1.333 3.707-.058 1.28-.072 1.688-.072 4.947 0 3.259.014 3.667.072 4.947.062 1.406.34 2.713 1.333 3.707 1.333.993 1.27 2.3 1.333 3.707.058 1.28.072 1.688.072 4.947 0 3.259-.014 3.667-.072 4.947-.062 1.406-.34 2.713-1.333 3.707-1.333.993-1.27 2.3-1.333 3.707-.058 1.28-.072 1.688-.072 4.947 0-3.259-.014-3.667-.072-4.947-.062-1.406-.34-2.713-1.333-3.707-1.333-.993-1.27-2.3-1.333-3.707-.058-1.28-.072-1.688-.072-4.947zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/>
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.326 3.608 1.301.975.975 1.24 2.242 1.301 3.608.058 1.266.07 1.646.07 4.85 0 3.204-.012 3.584-.07 4.85-.062 1.366-.326 2.633-1.301 3.608-.975.975-2.242 1.24-3.608 1.301-1.266.058-1.646.07-4.85.07-3.204 0-3.584-.012-4.85-.07-1.366-.062-2.633-.326-3.608-1.301-.975-.975-1.24-2.242-1.301-3.608-.058-1.266-.07-1.646-.07-4.85 0-3.204.012-3.584.07-4.85.062-1.366.326-2.633 1.301-3.608.975-.975 2.242-1.24 3.608-1.301 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-1.406.062-2.713.34-3.707 1.333-.993.993-1.27 2.3-1.333 3.707-.058 1.28-.072 1.688-.072 4.947 0 3.259.014 3.667.072 4.947.062 1.406.34 2.713 1.333 3.707.993.993 2.3 1.27 3.707 1.333 1.28.058 1.688.072 4.947.072 3.259 0 3.667-.014 4.947-.072 1.406-.062 2.713-.34 3.707-1.333.993-.993 1.27-2.3 1.333-3.707.058-1.28.072-1.688.072-4.947 0-3.259-.014-3.667-.072-4.947-.062-1.406-.34-2.713-1.333-3.707-.993-.993-2.3-1.27-3.707-1.333-1.28-.058-1.688-.072-4.947-.072zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/>
                             </svg>
                         </a>
                         <a href="#" class="social-icon">
@@ -1098,7 +1115,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Header scroll effect
@@ -1246,147 +1263,45 @@
             };
             
             scrollReveal(document.querySelectorAll('.footer-column'), 0.2);
+            
+            // Testimonials Swiper slider
+            const testimonialSwiper = new Swiper('#testimonialSwiper', {
+                slidesPerView: 1,
+                spaceBetween: 20,
+                centeredSlides: true,
+                loop: true,
+                autoplay: {
+                    delay: 4000,
+                    disableOnInteraction: true,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                breakpoints: {
+                    768: {
+                        slidesPerView: 1.5, // Show partial adjacent slides on PC
+                        spaceBetween: 20,
+                    },
+                    1024: {
+                        slidesPerView: 1.8, // Adjust for wider screens
+                        spaceBetween: 20,
+                    },
+                },
+            });
 
-            // Testimonials slider
-            const slider = document.getElementById('testimonialsSlider');
-            const track = document.getElementById('testimonialsTrack');
-            const slides = document.querySelectorAll('.testimonial-card');
-            const dots = document.querySelectorAll('.dot');
-            const slideWidth = slides[0].offsetWidth + 20; // Width + margin
-
-            let currentSlide = 0;
-            let startX;
-            let scrollLeft;
-            let isDragging = false;
-            let autoScrollInterval;
-
-            // Initialize the slider
-            function initSlider() {
-                updateSlideClasses(); // Set initial active class
-                centerTrack(); // Center the track
-
-                // Add event listeners for dragging
-                slider.addEventListener('mousedown', startDrag);
-                slider.addEventListener('touchstart', startDrag, { passive: true });
-
-                slider.addEventListener('mousemove', drag);
-                slider.addEventListener('touchmove', drag, { passive: false });
-
-                slider.addEventListener('mouseup', endDrag);
-                slider.addEventListener('mouseleave', endDrag);
-                slider.addEventListener('touchend', endDrag);
-
-                // Start auto-scrolling
-                startAutoScroll();
-
-                // Pause auto-scroll on interaction
-                slider.addEventListener('mouseenter', stopAutoScroll);
-                slider.addEventListener('mouseleave', startAutoScroll);
-                slider.addEventListener('touchstart', stopAutoScroll);
-                slider.addEventListener('touchend', startAutoScroll);
-            }
-
-            // Ensure slider initializes on page load and when section is viewed
-            document.addEventListener('DOMContentLoaded', initSlider);
-
-            // Re-initialize when Testimonials section comes into view
+            // Re-initialize Swiper when section comes into view
             const testimonialsSection = document.querySelector('.testimonials');
-            const observer = new IntersectionObserver((entries) => {
+            const swiperObserver = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting) {
-                    centerTrack();
-                    updateSlideClasses();
-                    updateDots();
+                    testimonialSwiper.update(); // Refresh Swiper layout
                 }
             }, { threshold: 0.2 });
-            observer.observe(testimonialsSection);
-
-            function startDrag(e) {
-                isDragging = true;
-                startX = e.pageX || e.touches[0].pageX;
-                scrollLeft = track.scrollLeft;
-                slider.style.cursor = 'grabbing';
-
-                if (e.type === 'touchstart') {
-                    startX = e.touches[0].pageX;
-                }
-            }
-
-            function drag(e) {
-                if (!isDragging) return;
-
-                e.preventDefault();
-
-                const x = e.pageX || e.touches[0].pageX;
-                const walk = (x - startX) * 2;
-
-                const offset = (slider.offsetWidth - slideWidth) / 2;
-                track.style.transform = `translateX(calc(${offset}px - ${currentSlide * slideWidth}px + ${walk}px))`;
-            }
-
-            function endDrag(e) {
-                if (!isDragging) return;
-                isDragging = false;
-                slider.style.cursor = 'grab';
-
-                const x = e.pageX || (e.changedTouches && e.changedTouches[0].pageX);
-                if (!x) return;
-
-                const walk = (x - startX) * 2;
-
-                if (walk < -100 && currentSlide < slides.length - 1) {
-                    currentSlide++;
-                } else if (walk > 100 && currentSlide > 0) {
-                    currentSlide--;
-                }
-
-                updateSlider();
-            }
-
-            function goToSlide(index) {
-                currentSlide = index;
-                updateSlider();
-                stopAutoScroll();
-                setTimeout(startAutoScroll, 5000);
-            }
-
-            function updateSlider() {
-                centerTrack();
-                updateSlideClasses();
-                updateDots();
-            }
-
-            function centerTrack() {
-                // Center the active slide
-                const offset = (slider.offsetWidth - slideWidth) / 2;
-                const translateX = offset - currentSlide * slideWidth;
-                track.style.transform = `translateX(${translateX}px)`;
-            }
-
-            function updateSlideClasses() {
-                slides.forEach((slide, index) => {
-                    slide.classList.toggle('active', index === currentSlide);
-                });
-            }
-
-            function updateDots() {
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === currentSlide);
-                });
-            }
-
-            function startAutoScroll() {
-                autoScrollInterval = setInterval(() => {
-                    currentSlide = (currentSlide + 1) % slides.length;
-                    updateSlider();
-                }, 4000);
-            }
-
-            function stopAutoScroll() {
-                clearInterval(autoScrollInterval);
-            }
-
-            // Make goToSlide available globally
-            window.goToSlide = goToSlide;
+            swiperObserver.observe(testimonialsSection);
         });
     </script>
 </body>
