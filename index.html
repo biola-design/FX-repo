@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Innovate Solutions | Business Landing Page</title>
+    <title>FxAbìolá | Business Landing Page</title>
     <style>
         /* Reset and Base Styles */
         * {
@@ -45,6 +45,23 @@
             background: linear-gradient(135deg, #6366f1, #4f46e5);
             color: white;
             border: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn-primary:hover::after {
+            left: 100%;
         }
         
         .btn-primary:hover {
@@ -66,6 +83,20 @@
         
         .section-padding {
             padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-padding::before {
+            content: '';
+            position: absolute;
+            height: 100px;
+            width: 100%;
+            top: -50px;
+            left: 0;
+            background: inherit;
+            transform: skewY(-2deg);
+            z-index: -1;
         }
         
         .text-center {
@@ -78,13 +109,63 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -100% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
         .animate {
             animation: fadeIn 0.8s ease forwards;
         }
         
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.4s; }
-        .delay-3 { animation-delay: 0.6s; }
+        .delay-1 { animation-delay: 0.4s; }
+        .delay-2 { animation-delay: 0.6s; }
+        .delay-3 { animation-delay: 0.8s; }
         
         /* Header Styles */
         header {
@@ -159,6 +240,25 @@
             width: 100%;
         }
         
+        .nav-links.active {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background-color: #1a1a1a;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        .nav-links.active li {
+            margin: 15px 0;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
         .mobile-menu-btn {
             display: none;
             cursor: pointer;
@@ -195,7 +295,7 @@
         .hero-text {
             flex: 1;
             opacity: 0;
-            animation: fadeIn 1s ease forwards;
+            animation: fadeInLeft 1.2s ease forwards;
         }
         
         .hero-text h1 {
@@ -233,7 +333,7 @@
         .hero-image {
             flex: 1;
             opacity: 0;
-            animation: fadeIn 1s ease 0.3s forwards;
+            animation: fadeInRight 1.2s ease 0.3s forwards;
         }
         
         .hero-image img {
@@ -301,6 +401,7 @@
             border-radius: 20px;
             margin-bottom: 24px;
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(79, 70, 229, 0.05));
+            animation: float 6s ease-in-out infinite;
         }
         
         .feature-icon svg {
@@ -415,54 +516,67 @@
             background-color: #1a1a1a;
         }
         
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-        }
-        
-        .testimonial-card {
-            background: #242424;
-            border-radius: 12px;
-            padding: 40px 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            opacity: 0;
-        }
-        
-        .testimonial-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        }
-        
-        .testimonial-text {
-            font-size: 1.125rem;
-            color: #cbd5e1;
-            margin-bottom: 24px;
+        /* Testimonials slider container */
+        .testimonials-slider-container {
             position: relative;
+            max-width: 90%;
+            margin: 0 auto;
+            padding: 20px 0;
         }
         
-        .testimonial-text::before {
-            content: '"';
-            font-size: 4rem;
-            position: absolute;
-            top: -20px;
-            left: -10px;
-            color: rgba(99, 102, 241, 0.2);
-            font-family: Georgia, serif;
+        /* Main slider */
+        .testimonials-slider {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            padding: 10px 0;
+            cursor: grab;
         }
         
+        .testimonials-slider:active {
+            cursor: grabbing;
+        }
+        
+        /* Track containing all testimonial cards */
+        .testimonials-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        /* Individual testimonial card */
+        .testimonial-card {
+            background-color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 1.2rem;
+            width: 280px; /* Smaller width */
+            margin-right: 20px; /* Space between cards */
+            flex-shrink: 0;
+        }
+        
+        /* Testimonial text styling */
+        .testimonial-text {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: #555;
+            margin-bottom: 0.8rem;
+            font-style: italic;
+        }
+        
+        /* Author container */
         .testimonial-author {
             display: flex;
             align-items: center;
+            margin-top: 1rem;
         }
         
+        /* Author image */
         .author-image {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             overflow: hidden;
-            margin-right: 16px;
+            margin-right: 0.8rem;
         }
         
         .author-image img {
@@ -471,24 +585,50 @@
             object-fit: cover;
         }
         
+        /* Author info */
         .author-info h4 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: #f8fafc;
-            margin-bottom: 4px;
+            margin: 0;
+            font-size: 0.9rem;
+            color: #333;
         }
         
         .author-info p {
-            font-size: 0.875rem;
-            color: #94a3b8;
+            margin: 0.2rem 0 0;
+            font-size: 0.8rem;
+            color: #777;
+        }
+        
+        /* Pagination dots */
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .dot {
+            height: 8px;
+            width: 8px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .dot.active {
+            background-color: #007bff;
+            transform: scale(1.2);
         }
         
         /* CTA Section */
         .cta {
-            background: linear-gradient(135deg, #4338ca, #6366f1);
+            background: linear-gradient(135deg, #4338ca, #6366f1, #4338ca, #6366f1);
+            background-size: 200% 100%;
             color: white;
             padding: 80px 0;
             text-align: center;
+            animation: shimmer 8s linear infinite;
         }
         
         .cta-content {
@@ -507,6 +647,10 @@
             font-size: 1.125rem;
             color: rgba(255, 255, 255, 0.9);
             margin-bottom: 32px;
+        }
+        
+        .cta .btn-primary {
+            animation: pulse 2s infinite;
         }
         
         .cta-form {
@@ -560,6 +704,17 @@
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 40px;
             margin-bottom: 40px;
+        }
+        
+        .footer-column {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        
+        .footer-column.show {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .footer-column h3 {
@@ -656,6 +811,10 @@
                 display: none;
             }
             
+            .nav-links.active {
+                display: flex;
+            }
+            
             .mobile-menu-btn {
                 display: block;
             }
@@ -691,7 +850,7 @@
     <header id="header">
         <div class="container">
             <nav>
-                <a href="#" class="logo">Automated Trading <span>Solutions</span></a>
+                <a href="#" class="logo">FxAbiola<span> Bot<span> solutions</span></a>
                 <ul class="nav-links">
                     <li><a href="#features">Features</a></li>
                     <li><a href="#about">About Us</a></li>
@@ -699,7 +858,8 @@
                     <li><a href="#contact" class="btn btn-primary">Contact Us</a></li>
                 </ul>
                 <div class="mobile-menu-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" view transcription
+                    viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </div>
@@ -712,15 +872,15 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1>Maximize Your<span> Trading Potential </span>With Our Advance Trading Bot's.</h1>
-                    <p>Our Automated Trading Solution uses cutting-edge technology to identify profitable trades and execute them automatically, maximizing your returns while minimizing risk, and also takes the guesswork out of trading with our Advanced trading bot that analyzes market trends and makes data-driven decisions for you.</p>
+                    <h1>Unlock Consistent <span>Profits</span> With a Proven Trading Bot.</h1>
+                    <p>Our Automated Trading Solution uses cutting-edge technology to identify profitable trades and execute them automatically, maximizing your returns while minimizing risk.</p>
                     <div class="hero-buttons">
-                        <a href="#features" class="btn btn-primary">Explore Our Products</a>
-                        <a href="#contact" class="btn btn-secondary">Schedule a Call</a>
+                        <a href="#features" class="btn btn-primary">Products</a>
+                        <a href="#contact" class="btn btn-secondary">Reviews</a>
                     </div>
                 </div>
                 <div class="hero-image">
-                    <img src="/api/placeholder/600/400" alt="Business Growth Strategy">
+                    <img src="/api/placeholder/600/400" alt="📈">
                 </div>
             </div>
         </div>
@@ -731,7 +891,7 @@
         <div class="container">
             <div class="section-header animate">
                 <h2>How We Help You Succeed</h2>
-                <p>Our comprehensive suite of services is designed to address your business challenges and capitalize on opportunities for growth.</p>
+                <p>Our comprehensive Bot solutions is designed to address your trading challenges and capitalize on opportunities for growth.</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card animate delay-1">
@@ -740,43 +900,35 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                         </svg>
                     </div>
-                    <h3>CERBOT-ADVANCE</h3>
-                    <p>Gain deep insights into your market dynamics, customer behavior, and competitors to make informed strategic decisions.</p>
+                    <h3>CER-BOT</h3>
+                    <ul class="feature-list">
+                        <li>📈 Advanced Trend trading</li>
+                        <li>🚀 Capital growth strategy</li>
+                    </ul>
                     <a href="#" class="feature-link">
-                        Learn more
+                        Purchase
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
                     </a>
                 </div>
-                <div class="feature-card animate delay-2">
+                <div class="feature-card animate delay-1">
                     <div class="feature-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l4-4h-.586A1.994 1.994 0 019 13.414" />
                         </svg>
                     </div>
-                    <h3>Strategic Planning</h3>
-                    <p>Develop comprehensive business strategies that align with your goals and provide a clear roadmap for sustainable growth.</p>
+                    <h3>T-signalBot</h3>
+                    <ul class="feature-list">
+                        <li>🔄 Automatically receives trade signals from our Telegram Channel</li>
+                        <li>🔥 Real time market call</li>
+                        <li>✅ Risk management Strategy</li>
+                        <li>✈️ Zero delay trade entry</li>
+                    </ul>
                     <a href="#" class="feature-link">
-                        Learn more
+                        Purchase
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </a>
-                </div>
-                <div class="feature-card animate delay-3">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
-                        </svg>
-                    </div>
-                    <h3>Digital Transformation</h3>
-                    <p>Leverage technology to optimize your processes, enhance customer experience, and drive innovation across your organization.</p>
-                    <a href="#" class="feature-link">
-                        Learn more
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
                     </a>
                 </div>
@@ -789,24 +941,22 @@
         <div class="container">
             <div class="about-content">
                 <div class="about-image animate">
-                    <img src="/api/placeholder/600/400" alt="About Our Company">
+                    <img src="/api/placeholder/600/400" alt="About Innovate Solutions">
                 </div>
-                <div class="about-text animate">
-                    <h2>We're Passionate About Maximizing Your Trading Potential</h2>
-                    <p>For over a decade, Innovate Solutions has been helping businesses of all sizes transform their operations and achieve remarkable growth. Our approach combines deep industry expertise with innovative thinking to deliver tailored solutions.</p>
-                    <p>Our team of seasoned consultants brings diverse experience across multiple sectors, ensuring that we understand your unique challenges and opportunities.</p>
-                    
+                <div class="about-text animate delay-1">
+                    <h2>About Innovate Solutions</h2>
+                    <p>We are a dedicated team of professionals committed to driving your business success through innovative strategies and cutting-edge solutions.</p>
                     <div class="stats">
-                        <div class="stat animate delay-1">
-                            <h3>500+</h3>
+                        <div class="stat animate delay-2">
+                            <h3 data-value="95" data-suffix="%">0%</h3>
+                            <p>Client Satisfaction</p>
+                        </div>
+                        <div class="stat animate delay-2">
+                            <h3 data-value="150" data-suffix="+">0+</h3>
                             <p>Projects Completed</p>
                         </div>
                         <div class="stat animate delay-2">
-                            <h3>98%</h3>
-                            <p>Client Satisfaction</p>
-                        </div>
-                        <div class="stat animate delay-3">
-                            <h3>12+</h3>
+                            <h3 data-value="10" data-suffix="+">0+</h3>
                             <p>Years Experience</p>
                         </div>
                     </div>
@@ -820,45 +970,393 @@
         <div class="container">
             <div class="section-header animate">
                 <h2>What Our Clients Say</h2>
-                <p>Don't just take our word for it. Here's what some of our clients have to say about their experience working with us.</p>
+                <p>Hear from businesses we've helped transform and grow through our innovative solutions.</p>
             </div>
-            <div class="testimonials-grid">
-                <div class="testimonial-card animate delay-1">
-                    <div class="testimonial-text">
-                        Innovate Solutions transformed our approach to market expansion. Their strategic insights helped us identify opportunities we had overlooked and develop a plan that resulted in 35% revenue growth in just six months.
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-image">
-                            <img src="/api/placeholder/60/60" alt="Sarah Johnson">
+            
+            <div class="testimonials-slider-container">
+                <div class="testimonials-slider" id="testimonialsSlider">
+                    <div class="testimonials-track" id="testimonialsTrack">
+                        <!-- Testimonial 1 -->
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">"Innovate Solutions transformed our business strategy and boosted our growth beyond expectations."</p>
+                            <div class="testimonial-author">
+                                <div class="author-image">
+                                    <img src="/api/placeholder/50/50" alt="John Doe">
+                                </div>
+                                <div class="author-info">
+                                    <h4>John Doe</h4>
+                                    <p>CEO, TechCorp</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="author-info">
-                            <h4>Sarah Johnson</h4>
-                            <p>CEO, TechVision Inc.</p>
+                        
+                        <!-- Testimonial 2 -->
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">"Their expertise in market analysis gave us a competitive edge we never had before."</p>
+                            <div class="testimonial-author">
+                                <div class="author-image">
+                                    <img src="/api/placeholder/50/50" alt="Jane Smith">
+                                </div>
+                                <div class="author-info">
+                                    <h4>Jane Smith</h4>
+                                    <p>Founder, StartUpX</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Testimonial 3 -->
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">"The digital marketing solutions provided were game-changing for our brand."</p>
+                            <div class="testimonial-author">
+                                <div class="author-image">
+                                    <img src="/api/placeholder/50/50" alt="Mike Johnson">
+                                </div>
+                                <div class="author-info">
+                                    <h4>Mike Johnson</h4>
+                                    <p>Marketing Director, GrowEasy</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="testimonial-card animate delay-2">
-                    <div class="testimonial-text">
-                        Working with the team at Innovate Solutions has been a game-changer for our business. Their attention to detail and commitment to delivering results exceeds expectations. We've seen a dramatic improvement in our operational efficiency.
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-image">
-                            <img src="/api/placeholder/60/60" alt="Michael Rodriguez">
-                        </div>
-                        <div class="author-info">
-                            <h4>Michael Rodriguez</h4>
-                            <p>Operations Director, Global Retail</p>
-                        </div>
+                
+                <!-- Pagination dots -->
+                <div class="slider-dots">
+                    <span class="dot active" onclick="goToSlide(0)"></span>
+                    <span class="dot" onclick="goToSlide(1)"></span>
+                    <span class="dot" onclick="goToSlide(2)"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="contact">
+        <div class="container">
+            <div class="cta-content animate">
+                <h2>Ready to Transform Your Business?</h2>
+                <p>Get started today with a free consultation from our expert team.</p>
+                <div class="cta-form">
+                    <input type="email" placeholder="Enter your email">
+                    <button class="btn btn-primary">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Innovate<span>Solutions</span></h3>
+                    <p>Empowering businesses with innovative strategies since 2015.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <p>Email: info@innovatesolutions.com</p>
+                    <p>Phone: (555) 123-4567</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557a9.83 9.83 0 01-2.828.775 4.932 4.932 0 002.165-2.724 9.864 9.864 0 01-3.127 1.195 4.916 4.916 0 00-8.379 4.482 13.944 13.944 0 01-10.126-5.14 4.916 4.916 0 001.523 6.573 4.903 4.903 0 01-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.935 4.935 0 01-2.224.084 4.923 4.923 0 004.6 3.419A9.867 9.867 0 010 21.543a13.94 13.94 0 007.548 2.212c9.057 0 14.01-7.507 14.01-14.01 0-.213-.005-.425-.014-.636A10.012 10.012 0 0024 4.557z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.326 3.608 1.301.975.975 1.24 2.242 1.301 3.608.058 1.266.07 1.646.07 4.85 0 3.204-.012 3.584-.07 4.85-.062 1.366-.326 2.633-1.301 3.608-1.301.975-.975 1.24-2.242 1.301-3.608.058-1.266.07-1.646.07-4.85 0-3.204-.012-3.584-.07-4.85-.062-1.366-.326-2.633-1.301-3.608-.975-.975-2.242-1.24-3.608-1.301-1.266-.058-1.646-.07-4.85-.07-3.204 0-3.584.012-4.85.07-1.366.062-2.633.326-3.608 1.301-.975.975-1.24 2.242-1.301 3.608-.058 1.266-.07 1.646-.07 4.85 0 3.204.012 3.584.07 4.85.062 1.366.326 2.633 1.301 3.608.975.975 2.242 1.24 3.608 1.301 1.266.058 1.646.07 4.85.07zm0-2.163c-3.259 0-3.667.014-4.947.072-1.406.062-2.713.34-3.707 1.333-.993.993-1.27 2.3-1.333 3.707-.058 1.28-.072 1.688-.072 4.947 0 3.259.014 3.667.072 4.947.062 1.406.34 2.713 1.333 3.707 1.333.993 1.27 2.3 1.333 3.707.058 1.28.072 1.688.072 4.947 0 3.259-.014 3.667-.072 4.947-.062 1.406-.34 2.713-1.333 3.707-1.333.993-1.27 2.3-1.333 3.707-.058 1.28-.072 1.688-.072 4.947 0-3.259-.014-3.667-.072-4.947-.062-1.406-.34-2.713-1.333-3.707-1.333-.993-1.27-2.3-1.333-3.707-.058-1.28-.072-1.688-.072-4.947zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24h-1.918c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.325V1.325C24 .593 23.407 0 22.675 0z"/>
+                            </svg>
+                        </a>
                     </div>
                 </div>
-                <div class="testimonial-card animate delay-3">
-                    <div class="testimonial-text">
-                        The digital transformation strategy developed by Innovate Solutions has completely revolutionized how we serve our customers. Not only have we reduced costs, but our customer satisfaction scores have increased by 40%.
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-image">
-                            <img src="/api/placeholder/60/60" alt="Jennifer Lee">
-                        </div>
-                        <div class="author-info">
-                            <h4>Jennifer Lee</h4>
-                            <p>CMO, Service Solutions Ltd.</p>
+            </div>
+            <div class="copyright">
+                © 2025 Innovate Solutions. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Header scroll effect
+            const header = document.getElementById('header');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Intersection Observers for animations
+            const animateElements = document.querySelectorAll('.animate');
+            const featureCards = document.querySelectorAll('.feature-card');
+            const testimonialCards = document.querySelectorAll('.testimonial-card');
+            const statElements = document.querySelectorAll('.stat');
+            const aboutImage = document.querySelector('.about-image');
+            const aboutText = document.querySelector('.about-text');
+            const ctaContent = document.querySelector('.cta-content');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.animation = 'fadeIn 0.8s ease forwards';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            animateElements.forEach(element => {
+                observer.observe(element);
+            });
+            
+            const featureObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.animation = 'fadeIn 0.8s ease forwards';
+                        }, index * 200);
+                        featureObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            featureCards.forEach(card => {
+                featureObserver.observe(card);
+            });
+            
+            const testimonialObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.animation = 'fadeIn 0.8s ease forwards';
+                        }, index * 200);
+                        testimonialObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            testimonialCards.forEach(card => {
+                testimonialObserver.observe(card);
+            });
+            
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.animation = 'fadeIn 0.8s ease forwards';
+                            
+                            const statValue = entry.target.querySelector('h3');
+                            if (statValue) {
+                                const targetValue = parseInt(statValue.getAttribute('data-value'));
+                                animateCounter(statValue, targetValue);
+                            }
+                        }, index * 300);
+                        statsObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            statElements.forEach(stat => {
+                statsObserver.observe(stat);
+            });
+            
+            if (aboutImage) observer.observe(aboutImage);
+            if (aboutText) observer.observe(aboutText);
+            if (ctaContent) observer.observe(ctaContent);
+            
+            function animateCounter(element, target) {
+                let start = 0;
+                const duration = 1500;
+                const startTimestamp = performance.now();
+                const suffix = element.getAttribute('data-suffix') || '';
+                
+                const step = (timestamp) => {
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const value = Math.floor(progress * target);
+                    element.innerText = value + suffix;
+                    
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    } else {
+                        element.innerText = target + suffix;
+                    }
+                };
+                
+                window.requestAnimationFrame(step);
+            }
+            
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (mobileMenuBtn && navLinks) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                });
+            }
+            
+            // Scroll reveal for footer
+            const scrollReveal = (elements, delay = 0) => {
+                elements.forEach((el, index) => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(20px)';
+                    el.style.transition = `opacity 0.6s ease ${delay + index * 0.1}s, transform 0.6s ease ${delay + index * 0.1}s`;
+                    
+                    const elementObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                el.style.opacity = '1';
+                                el.style.transform = 'translateY(0)';
+                                elementObserver.unobserve(el);
+                            }
+                        });
+                    }, { threshold: 0.1 });
+                    
+                    elementObserver.observe(el);
+                });
+            };
+            
+            scrollReveal(document.querySelectorAll('.footer-column'), 0.2);
+
+            // Testimonials slider
+            const slider = document.getElementById('testimonialsSlider');
+            const track = document.getElementById('testimonialsTrack');
+            const slides = document.querySelectorAll('.testimonial-card');
+            const dots = document.querySelectorAll('.dot');
+            const slideWidth = slides[0].offsetWidth + 20; // Width + margin
+            
+            let currentSlide = 0;
+            let startX;
+            let scrollLeft;
+            let isDragging = false;
+            let autoScrollInterval;
+            
+            // Initialize the slider
+            initSlider();
+            
+            function initSlider() {
+                // Add event listeners for dragging
+                slider.addEventListener('mousedown', startDrag);
+                slider.addEventListener('touchstart', startDrag, { passive: true });
+                
+                slider.addEventListener('mousemove', drag);
+                slider.addEventListener('touchmove', drag, { passive: false });
+                
+                slider.addEventListener('mouseup', endDrag);
+                slider.addEventListener('mouseleave', endDrag);
+                slider.addEventListener('touchend', endDrag);
+                
+                // Start auto-scrolling
+                startAutoScroll();
+                
+                // Pause auto-scroll when user interacts with slider
+                slider.addEventListener('mouseenter', stopAutoScroll);
+                slider.addEventListener('mouseleave', startAutoScroll);
+                slider.addEventListener('touchstart', stopAutoScroll);
+                slider.addEventListener('touchend', startAutoScroll);
+            }
+            
+            function startDrag(e) {
+                isDragging = true;
+                startX = e.pageX || e.touches[0].pageX;
+                scrollLeft = track.scrollLeft;
+                slider.style.cursor = 'grabbing';
+                
+                // Prevent default behavior to avoid page scrolling on touch devices
+                if (e.type === 'touchstart') {
+                    startX = e.touches[0].pageX;
+                }
+            }
+            
+            function drag(e) {
+                if (!isDragging) return;
+                
+                // Prevent default behavior to avoid page scrolling
+                e.preventDefault();
+                
+                const x = e.pageX || e.touches[0].pageX;
+                const walk = (x - startX) * 2; // Multiply for faster drag effect
+                
+                // Update track position while dragging
+                track.style.transform = `translateX(${-currentSlide * slideWidth + walk}px)`;
+            }
+            
+            function endDrag(e) {
+                if (!isDragging) return;
+                isDragging = false;
+                slider.style.cursor = 'grab';
+                
+                const x = e.pageX || (e.changedTouches && e.changedTouches[0].pageX);
+                if (!x) return;
+                
+                const walk = (x - startX) * 2;
+                
+                // Determine if user intended to go to the next or previous slide
+                if (walk < -100 && currentSlide < slides.length - 1) {
+                    currentSlide++;
+                } else if (walk > 100 && currentSlide > 0) {
+                    currentSlide--;
+                }
+                
+                updateSlider();
+            }
+            
+            // Go to a specific slide (used by dot navigation)
+            function goToSlide(index) {
+                currentSlide = index;
+                updateSlider();
+                stopAutoScroll();
+                setTimeout(startAutoScroll, 5000);
+            }
+            
+            // Update slider position and active dot
+            function updateSlider() {
+                // Move the track
+                track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+                
+                // Update active dot
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+            }
+            
+            // Auto-scroll functionality
+            function startAutoScroll() {
+                autoScrollInterval = setInterval(() => {
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    updateSlider();
+                }, 4000);
+            }
+            
+            function stopAutoScroll() {
+                clearInterval(autoScrollInterval);
+            }
+            
+            // Make goToSlide available globally
+            window.goToSlide = goToSlide;
+        });
+    </script>
+</body>
+</html>
