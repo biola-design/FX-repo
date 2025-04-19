@@ -512,114 +512,122 @@
         }
         
         /* Testimonials */
-        .testimonials {
-            background-color: #1a1a1a;
-        }
-        
-        /* Testimonials slider container */
-        .testimonials-slider-container {
-            position: relative;
-            max-width: 90%;
-            margin: 0 auto;
-            padding: 20px 0;
-        }
-        
-        /* Main slider */
-        .testimonials-slider {
-            width: 100%;
-            overflow: hidden;
-            position: relative;
-            padding: 10px 0;
-            cursor: grab;
-        }
-        
-        .testimonials-slider:active {
-            cursor: grabbing;
-        }
-        
-        /* Track containing all testimonial cards */
-        .testimonials-track {
-            display: flex;
-            transition: transform 0.5s ease;
-        }
-        
-        /* Individual testimonial card */
-        .testimonial-card {
-            background-color: #fff;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            padding: 1.2rem;
-            width: 280px; /* Smaller width */
-            margin-right: 20px; /* Space between cards */
-            flex-shrink: 0;
-        }
-        
-        /* Testimonial text styling */
-        .testimonial-text {
-            font-size: 0.9rem;
-            line-height: 1.4;
-            color: #555;
-            margin-bottom: 0.8rem;
-            font-style: italic;
-        }
-        
-        /* Author container */
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            margin-top: 1rem;
-        }
-        
-        /* Author image */
-        .author-image {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin-right: 0.8rem;
-        }
-        
-        .author-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        /* Author info */
-        .author-info h4 {
-            margin: 0;
-            font-size: 0.9rem;
-            color: #333;
-        }
-        
-        .author-info p {
-            margin: 0.2rem 0 0;
-            font-size: 0.8rem;
-            color: #777;
-        }
-        
-        /* Pagination dots */
-        .slider-dots {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        
-        .dot {
-            height: 8px;
-            width: 8px;
-            margin: 0 5px;
-            background-color: #bbb;
-            border-radius: 50%;
-            display: inline-block;
-            transition: background-color 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .dot.active {
-            background-color: #007bff;
-            transform: scale(1.2);
-        }
+.testimonials {
+    background-color: #1a1a1a;
+}
+
+/* Testimonials slider container */
+.testimonials-slider-container {
+    position: relative;
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* Main slider */
+.testimonials-slider {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 10px 0;
+    cursor: grab;
+}
+
+.testimonials-slider:active {
+    cursor: grabbing;
+}
+
+/* Track containing all testimonial cards */
+.testimonials-track {
+    display: flex;
+    transition: transform 0.5s ease;
+    justify-content: center; /* Center the track */
+}
+
+/* Individual testimonial card */
+.testimonial-card {
+    background-color: #242424; /* Match previous dark theme */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    width: 320px; /* Slightly larger for better visibility */
+    margin: 0 10px; /* Reduced margin for tighter spacing */
+    flex-shrink: 0;
+    opacity: 0.3; /* Default faded state for non-active cards */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.testimonial-card.active {
+    opacity: 1; /* Fully visible for active card */
+    transform: scale(1.05); /* Slightly enlarge active card */
+}
+
+/* Testimonial text styling */
+.testimonial-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #cbd5e1; /* Match page text color */
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+/* Author container */
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+/* Author image */
+.author-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 0.8rem;
+}
+
+.author-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Author info */
+.author-info h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: #f8fafc; /* Match page heading color */
+}
+
+.author-info p {
+    margin: 0.2rem 0 0;
+    font-size: 0.875rem;
+    color: #94a3b8; /* Match page muted text color */
+}
+
+/* Pagination dots */
+.slider-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.dot {
+    height: 8px;
+    width: 8px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+.dot.active {
+    background-color: #6366f1; /* Match theme color */
+    transform: scale(1.2);
+}
         
         /* CTA Section */
         .cta {
@@ -1240,122 +1248,133 @@
             
             scrollReveal(document.querySelectorAll('.footer-column'), 0.2);
 
-            // Testimonials slider
-            const slider = document.getElementById('testimonialsSlider');
-            const track = document.getElementById('testimonialsTrack');
-            const slides = document.querySelectorAll('.testimonial-card');
-            const dots = document.querySelectorAll('.dot');
-            const slideWidth = slides[0].offsetWidth + 20; // Width + margin
-            
-            let currentSlide = 0;
-            let startX;
-            let scrollLeft;
-            let isDragging = false;
-            let autoScrollInterval;
-            
-            // Initialize the slider
-            initSlider();
-            
-            function initSlider() {
-                // Add event listeners for dragging
-                slider.addEventListener('mousedown', startDrag);
-                slider.addEventListener('touchstart', startDrag, { passive: true });
-                
-                slider.addEventListener('mousemove', drag);
-                slider.addEventListener('touchmove', drag, { passive: false });
-                
-                slider.addEventListener('mouseup', endDrag);
-                slider.addEventListener('mouseleave', endDrag);
-                slider.addEventListener('touchend', endDrag);
-                
-                // Start auto-scrolling
-                startAutoScroll();
-                
-                // Pause auto-scroll when user interacts with slider
-                slider.addEventListener('mouseenter', stopAutoScroll);
-                slider.addEventListener('mouseleave', startAutoScroll);
-                slider.addEventListener('touchstart', stopAutoScroll);
-                slider.addEventListener('touchend', startAutoScroll);
-            }
-            
-            function startDrag(e) {
-                isDragging = true;
-                startX = e.pageX || e.touches[0].pageX;
-                scrollLeft = track.scrollLeft;
-                slider.style.cursor = 'grabbing';
-                
-                // Prevent default behavior to avoid page scrolling on touch devices
-                if (e.type === 'touchstart') {
-                    startX = e.touches[0].pageX;
-                }
-            }
-            
-            function drag(e) {
-                if (!isDragging) return;
-                
-                // Prevent default behavior to avoid page scrolling
-                e.preventDefault();
-                
-                const x = e.pageX || e.touches[0].pageX;
-                const walk = (x - startX) * 2; // Multiply for faster drag effect
-                
-                // Update track position while dragging
-                track.style.transform = `translateX(${-currentSlide * slideWidth + walk}px)`;
-            }
-            
-            function endDrag(e) {
-                if (!isDragging) return;
-                isDragging = false;
-                slider.style.cursor = 'grab';
-                
-                const x = e.pageX || (e.changedTouches && e.changedTouches[0].pageX);
-                if (!x) return;
-                
-                const walk = (x - startX) * 2;
-                
-                // Determine if user intended to go to the next or previous slide
-                if (walk < -100 && currentSlide < slides.length - 1) {
-                    currentSlide++;
-                } else if (walk > 100 && currentSlide > 0) {
-                    currentSlide--;
-                }
-                
-                updateSlider();
-            }
-            
-            // Go to a specific slide (used by dot navigation)
-            function goToSlide(index) {
-                currentSlide = index;
-                updateSlider();
-                stopAutoScroll();
-                setTimeout(startAutoScroll, 5000);
-            }
-            
-            // Update slider position and active dot
-            function updateSlider() {
-                // Move the track
-                track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
-                
-                // Update active dot
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === currentSlide);
-                });
-            }
-            
-            // Auto-scroll functionality
-            function startAutoScroll() {
-                autoScrollInterval = setInterval(() => {
-                    currentSlide = (currentSlide + 1) % slides.length;
-                    updateSlider();
-                }, 4000);
-            }
-            
-            function stopAutoScroll() {
-                clearInterval(autoScrollInterval);
-            }
-            
-            // Make goToSlide available globally
-            window.goToSlide = goToSlide;
+          // Testimonials slider
+const slider = document.getElementById('testimonialsSlider');
+const track = document.getElementById('testimonialsTrack');
+const slides = document.querySelectorAll('.testimonial-card');
+const dots = document.querySelectorAll('.dot');
+const slideWidth = slides[0].offsetWidth + 20; // Width + margin
+
+let currentSlide = 0;
+let startX;
+let scrollLeft;
+let isDragging = false;
+let autoScrollInterval;
+
+// Initialize the slider
+initSlider();
+
+function initSlider() {
+    updateSlideClasses(); // Set initial active class
+    centerTrack(); // Center the track initially
+
+    // Add event listeners for dragging
+    slider.addEventListener('mousedown', startDrag);
+    slider.addEventListener('touchstart', startDrag, { passive: true });
+
+    slider.addEventListener('mousemove', drag);
+    slider.addEventListener('touchmove', drag, { passive: false });
+
+    slider.addEventListener('mouseup', endDrag);
+    slider.addEventListener('mouseleave', endDrag);
+    slider.addEventListener('touchend', endDrag);
+
+    // Start auto-scrolling
+    startAutoScroll();
+
+    // Pause auto-scroll when user interacts with slider
+    slider.addEventListener('mouseenter', stopAutoScroll);
+    slider.addEventListener('mouseleave', startAutoScroll);
+    slider.addEventListener('touchstart', stopAutoScroll);
+    slider.addEventListener('touchend', startAutoScroll);
+}
+
+function startDrag(e) {
+    isDragging = true;
+    startX = e.pageX || e.touches[0].pageX;
+    scrollLeft = track.scrollLeft;
+    slider.style.cursor = 'grabbing';
+
+    if (e.type === 'touchstart') {
+        startX = e.touches[0].pageX;
+    }
+}
+
+function drag(e) {
+    if (!isDragging) return;
+
+    e.preventDefault();
+
+    const x = e.pageX || e.touches[0].pageX;
+    const walk = (x - startX) * 2;
+
+    track.style.transform = `translateX(calc(-${currentSlide * slideWidth}px + ${walk}px))`;
+}
+
+function endDrag(e) {
+    if (!isDragging) return;
+    isDragging = false;
+    slider.style.cursor = 'grab';
+
+    const x = e.pageX || (e.changedTouches && e.changedTouches[0].pageX);
+    if (!x) return;
+
+    const walk = (x - startX) * 2;
+
+    if (walk < -100 && currentSlide < slides.length - 1) {
+        currentSlide++;
+    } else if (walk > 100 && currentSlide > 0) {
+        currentSlide--;
+    }
+
+    updateSlider();
+}
+
+function goToSlide(index) {
+    currentSlide = index;
+    updateSlider();
+    stopAutoScroll();
+    setTimeout(startAutoScroll, 5000);
+}
+
+function updateSlider() {
+    centerTrack();
+    updateSlideClasses();
+    updateDots();
+}
+
+function centerTrack() {
+    // Center the active slide
+    const offset = (slider.offsetWidth - slideWidth) / 2; // Center offset
+    const translateX = -currentSlide * slideWidth + offset;
+    track.style.transform = `translateX(${translateX}px)`;
+}
+
+function updateSlideClasses() {
+    slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === currentSlide);
+    });
+}
+
+function updateDots() {
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+    });
+}
+
+function startAutoScroll() {
+    autoScrollInterval = setInterval(() => {
+        currentSlide = (currentSlide + 1) % slides.length;
+        updateSlider();
+    }, 4000);
+}
+
+function stopAutoScroll() {
+    clearInterval(autoScrollInterval);
+}
+
+ // Make goToSlide available globally
+    window.goToSlide = goToSlide;
         });
     </script>
 </body>
